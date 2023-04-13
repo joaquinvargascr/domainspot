@@ -1,0 +1,16 @@
+{
+    "name": "joaquinv/domainspot",
+    "description": "Description of project domainspot.",
+    "authors": [
+        {
+            "name": "joaquinv",
+            "email": "joavarvi@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.11.0",
+        "laminas/laminas-diactoros": "2.25.1",
+        "spatie/ssl-certificate": "^2.4",
+        "io-developer/php-whois": "^4.1"
+    }
+}
