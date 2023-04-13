@@ -50,13 +50,13 @@ $app->get('/whois/{domain}', function (Request $request, Response $response, $ar
                 $expirationDate = date(DATE_FORMAT, $data->expirationDate);
                 return new JsonResponse(['output' => $expirationDate], 200, [], JSON_PRETTY_PRINT);                 
              } else {
-                return new JsonResponse(['output' => 'many requests'], 500, [], JSON_PRETTY_PRINT);  
+                return new JsonResponse(['output' => 'many requests'], 200, [], JSON_PRETTY_PRINT);  
              }
          } else {
-            return new JsonResponse(['output' => 'domain is invalid'], 500, [], JSON_PRETTY_PRINT);
+            return new JsonResponse(['output' => 'domain is invalid'], 200, [], JSON_PRETTY_PRINT);
         } 
     } catch (Exception $exc) {
-        return new JsonResponse(['output' => $exc->getMessage()], 500, [], JSON_PRETTY_PRINT);
+        return new JsonResponse(['output' => $exc->getMessage()], 200, [], JSON_PRETTY_PRINT);
     }
 
 });
@@ -71,12 +71,12 @@ $app->get('/ssl/{domain}', function(Request $request, Response $response, $args)
             $message = ['output' => $data->expirationDate()->isoFormat(DATE_FORMAT)];
             return new JsonResponse($message, 200, [], JSON_PRETTY_PRINT);
         } else {
-            return new JsonResponse(['output' => 'domain is invalid'], 500, [], JSON_PRETTY_PRINT);
+            return new JsonResponse(['output' => 'domain is invalid'], 200, [], JSON_PRETTY_PRINT);
         }        
     } catch (HostDoesNotExist $exc) {
-        return new JsonResponse(['output' => $exc->getMessage()], 500, [], JSON_PRETTY_PRINT);
+        return new JsonResponse(['output' => $exc->getMessage()], 200, [], JSON_PRETTY_PRINT);
     } catch (ErrorException $exc) {
-        return new JsonResponse(['output' => $exc->getMessage()], 500, [], JSON_PRETTY_PRINT);
+        return new JsonResponse(['output' => $exc->getMessage()], 200, [], JSON_PRETTY_PRINT);
     }
     
 });
