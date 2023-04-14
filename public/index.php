@@ -59,7 +59,7 @@ $app->get('/ssl/{domain}', function (Request $request, Response $response, $args
         $response = $cacheProvider->withEtag($response, 'abc');
         if (preg_match("/^[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/", $domain)) {
             $certificate = SslCertificate::createForHostName($domain);
-            $message = ['output' => $certificate->expirationDate()->isoFormat(DATE_FORMAT)];
+            $message = ['output' => $certificate->expirationDate()->format(DATE_FORMAT)];
             return json_print($response, $message);
         } else {
             return json_print($response, ['output' => 'domain is invalid']);
@@ -95,6 +95,17 @@ $app->get('/whois/{domain}', function (Request $request, Response $response, $ar
         return json_print($response, ['output' => $exc->getMessage()]);
     }
 
+});
+
+$app->get('/whois-2/{domain}', function (Request $request, Response $response, $args) {
+    $domain = $args['domain'];
+//    $response = $cacheProvider->withEtag($response, 'abc');
+    if (preg_match("/^[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/", $domain)) {
+            $doc = new DOMDocument;
+            $doc->preserveWhiteSpace = FALSE;
+            @$doc->loadHTMLFile("https://www.whois.com/whois/".$domain);
+            return json_print($response, ['test' => $doc->getElementById('registryData')->nodeValue]);
+    }
 });
 
 $app->map(['GET'], '/{routes:.+}', function ($request, $response) {
