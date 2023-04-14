@@ -15,6 +15,7 @@ RUN set -eux; \
 	\
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
+		libmemcached-dev \
 		libfreetype6-dev \
 		libjpeg-dev \
 		libpng-dev \
@@ -24,6 +25,8 @@ RUN set -eux; \
         libicu-dev \
 	; \
 	\
+	pecl install memcached ; \
+	docker-php-ext-enable memcached ; \
     docker-php-ext-configure intl ; \
 	docker-php-ext-configure gd \
 		--with-freetype \
@@ -55,11 +58,13 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN { \
-                echo 'opcache.enable=1'; \
+        echo 'opcache.enable=1'; \
 		echo 'opcache.memory_consumption=128'; \
 		echo 'opcache.interned_strings_buffer=8'; \
 		echo 'opcache.max_accelerated_files=4000'; \
 		echo 'opcache.revalidate_freq=60'; \
+		echo 'error_reporting = E_ALL & ~E_NOTICE & ~E_DEPRECATED'; \
+		echo 'max_execution_time=300'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 WORKDIR /var/www/html
