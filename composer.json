@@ -9,8 +9,9 @@
     ],
     "require": {
         "slim/slim": "4.11.0",
-        "laminas/laminas-diactoros": "2.25.1",
         "spatie/ssl-certificate": "^2.4",
-        "io-developer/php-whois": "^4.1"
+        "io-developer/php-whois": "^4.1",
+        "slim/psr7": "^1.6",
+        "slim/http-cache": "^1.1"
     }
 }
